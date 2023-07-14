@@ -1,4 +1,4 @@
-# Detecting Human Body Poses in an Image
+# Detecting human body poses in an image
 
 Locate people and the stance of their bodies by analyzing an image with a PoseNet model.
 
@@ -12,9 +12,9 @@ The sample finds the locations of the 17 joints for each person in the image and
 
 - Note: Starting in iOS 14 and macOS 11, [Vision](https://developer.apple.com/documentation/vision) adds the ability to detect human body poses. For details, see [Detecting Human Body Poses in Images](https://developer.apple.com/documentation/vision/detecting_human_body_poses_in_images).
 
-## Configure the Capture Session
+## Configure the capture session
 
-The sample starts by getting an image from the device’s built-in camera using an [`AVCaptureSession`](https://developer.apple.com/documentation/avfoundation/avcapturesession) (see [Setting Up a Capture Session](https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/setting_up_a_capture_session)).
+The sample starts by getting an image from the device’s built-in camera using an [`AVCaptureSession`](https://developer.apple.com/documentation/avfoundation/avcapturesession) (see [Setting Up a Capture Session](https://developer.apple.com/documentation/avfoundation/capture_setup/setting_up_a_capture_session)).
 
 ``` swift
 if captureSession.isRunning {
@@ -32,7 +32,7 @@ try setCaptureSessionOutput()
 captureSession.commitConfiguration()
 ```
 
-## Acquire the Captured Image
+## Acquire the captured image
 
 A video capture session sends each image to the [`captureOutput(_:didOutput:from:)`](https://developer.apple.com/documentation/avfoundation/avcaptureaudiodataoutputsamplebufferdelegate/1386039-captureoutput) method of the [`VideoCapture`](x-source-tag://VideoCapture) class, where the app converts the received [`CMSampleBuffer`](https://developer.apple.com/documentation/coremedia/cmsamplebuffer) into a [`CGImage`](https://developer.apple.com/documentation/coregraphics/cgimage) before passing it to the delegate assigned to the [`VideoCapture`](x-source-tag://VideoCapture) object.
 
@@ -57,7 +57,7 @@ DispatchQueue.main.sync {
 }
 ```
 
-## Prepare the Input for the PoseNet Model
+## Prepare the input for the PoseNet model
 
 After receiving the captured image, the app wraps it in an instance of [`PoseNetInput`](x-source-tag://PoseNetInput), a custom feature provider, to resize the image to the specified size.
 
@@ -67,7 +67,7 @@ After receiving the captured image, the app wraps it in an instance of [`PoseNet
 let input = PoseNetInput(image: image, size: self.modelInputSize)
 ```
 
-## Pass the Input to the PoseNet Model
+## Pass the input to the PoseNet model
 
 The sample app then proceeds to pass the input to the PoseNet’s [`prediction`](https://developer.apple.com/documentation/coreml/mlmodel/2880280-prediction) function to obtain its outputs, which the app uses to detect poses.
 
@@ -89,7 +89,7 @@ DispatchQueue.main.async {
 }
 ```
 
-## Analyze the PoseNet Output to Locate Joints
+## Analyze the PoseNet output to locate joints
 
 The sample uses one of two algorithms to locate the joints of either one person or multiple persons. The single-person algorithm, the simplest and fastest, inspects the model’s outputs to locate the most prominent joints in the image and uses these joints to construct a single pose.
 
@@ -161,7 +161,7 @@ detectedPoses.forEach { pose in
 return detectedPoses
 ```
 
-## Visualize the Detected Poses
+## Visualize the detected poses
 
 For each detected pose, the sample app draws a wireframe over the input image, connecting the lines between the joints and then drawing circles for the joints themselves.
 

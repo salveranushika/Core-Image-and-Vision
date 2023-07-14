@@ -1,6 +1,6 @@
 File PoseNetMobileNet075S16FP16.mlmodel is based on the PoseNet model which is distributed under the Apache License 2.0. For more information, see https://github.com/tensorflow/tfjs-models/tree/master/posenet. See ACKNOWLEDGMENTS.txt for more licensing information.
 
-Copyright © 2020 Apple Inc.
+Copyright © 2023 Apple Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
