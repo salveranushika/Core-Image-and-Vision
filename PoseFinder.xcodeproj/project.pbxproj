@@ -39,7 +39,6 @@
 		0DCEF2C82416701D00ECEC99 /* PoseBuilder+Single.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PoseBuilder+Single.swift"; sourceTree = "<group>"; };
 		0DCEF2CA2416709B00ECEC99 /* PoseBuilder+Multiple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PoseBuilder+Multiple.swift"; sourceTree = "<group>"; };
 		0DCEF2CD241676C000ECEC99 /* PoseBuilderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseBuilderConfiguration.swift; sourceTree = "<group>"; };
-		420B7A9F4BA833CE510130DA /* ACKNOWLEDGMENTS.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = ACKNOWLEDGMENTS.txt; sourceTree = "<group>"; };
 		4A0FC5BB23190AD6004886B9 /* CGPoint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extension.swift"; sourceTree = "<group>"; };
 		4A2D05CD23BF9A2C00D002ED /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
 		4A2D05CF23BF9BBF00D002ED /* PopOverModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOverModalViewController.swift; sourceTree = "<group>"; };
@@ -79,10 +78,9 @@
 			isa = PBXGroup;
 			children = (
 				0563E980FDE557646F54ED8A /* LICENSE.txt */,
-				420B7A9F4BA833CE510130DA /* ACKNOWLEDGMENTS.txt */,
 			);
 			name = LICENSE;
-			path = LICENSE;
+			path = "";
 			sourceTree = "<group>";
 		};
 		0DCEF2CC241675C200ECEC99 /* Pose */ = {
