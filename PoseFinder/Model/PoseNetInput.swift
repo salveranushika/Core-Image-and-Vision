@@ -1,29 +1,15 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The implementation of a CoreML feature provider passed to the PoseNet model by the
- PoseNet class for prediction.
-*/
-
 import CoreML
 import Vision
 
-/// - Tag: PoseNetInput
 class PoseNetInput: MLFeatureProvider {
-    /// The name of the PoseNet model's input feature.
-    ///
-    /// You can see all the model's inputs and outputs, their names, and other information by selecting
-    /// `PoseNetMobileNet075S16FP16.mlmodel` in the Project Navigator.
+    // Name of the PoseNet model's input feature.
+    
     private static let imageFeatureName = "image"
 
-    /// The original image this feature provider uses as input to its consumers.
+    // Original image this feature provider uses as input to its consumers.
     var imageFeature: CGImage
 
     /// The size of the images this feature provider produces to its consumers.
-    ///
-    /// The feature provider resizes the `imageFeature` property by
-    /// cropping and resizing it to this size in the `featureValue(for:)` method.
     let imageFeatureSize: CGSize
 
     var featureNames: Set<String> {

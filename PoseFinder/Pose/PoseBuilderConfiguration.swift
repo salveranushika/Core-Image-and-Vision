@@ -1,11 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The implementation details of a structure that hold the parameters algorithms use for
- estimating poses.
-*/
-
 import CoreGraphics
 
 enum Algorithm: Int {
@@ -14,29 +6,21 @@ enum Algorithm: Int {
 }
 
 struct PoseBuilderConfiguration {
-    /// The minimum value for valid joints in a pose.
+    /// Min value for valid joints in pose
     var jointConfidenceThreshold = 0.1
 
-    /// The minimum value for a valid pose.
+    /// Min value for valid pose
     var poseConfidenceThreshold = 0.5
 
-    /// The minimum distance between two distinct joints of the same type.
-    ///
-    /// - Note: This parameter only applies to the multiple-pose algorithm.
+    /// Min distance between 2 distinct joints of same type
     var matchingJointDistance = 40.0
 
-    /// Search radius used when checking if a joint has the greatest confidence amongst its neighbors.
-    ///
-    /// - Note: This parameter only applies to the multiple-pose algorithm.
+    /// Search radius used when checking if a joint has the greatest confidence amongst its neighbors
     var localSearchRadius = 3
 
-    /// The maximum number of poses returned.
-    ///
-    /// - Note: This parameter only applies to the multiple-pose algorithm.
+    /// Max number of poses returned
     var maxPoseCount = 15
 
-    /// The number of iterations performed to refine an adjacent joint's position.
-    ///
-    /// - Note: This parameter only applies to the multiple-pose algorithm.
+    /// Number of iterations performed to refine an adjacent joint's position
     var adjacentJointOffsetRefinementSteps = 3
 }

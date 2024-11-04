@@ -1,11 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-Implementation details of a modal view that presents the PoseNet algorithm parameters
- to the user.
-*/
-
 import UIKit
 
 protocol ConfigurationViewControllerDelegate: AnyObject {

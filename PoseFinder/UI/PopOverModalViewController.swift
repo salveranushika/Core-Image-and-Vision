@@ -1,12 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-Implementation details for the PopOverPresentationManager and
- PopOverPresentationController classes, both used to present the ConfigurationViewController's
- view to the user.
-*/
-
 import UIKit
 
 // MARK: PopOverPresentationManager
@@ -35,7 +26,7 @@ class PopOverPresentationManager: NSObject, UIViewControllerTransitioningDelegat
 // MARK: - UIPresentationController
 
 class PopOverPresentationController: UIPresentationController {
-    /// Percentage used to compute the height of the view.
+    // The percentage used to compute the height of the view.
     private let popOverHeightRatio: CGFloat = 0.6
 
     override var frameOfPresentedViewInContainerView: CGRect {

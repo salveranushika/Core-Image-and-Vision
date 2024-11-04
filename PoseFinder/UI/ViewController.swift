@@ -1,30 +1,22 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The implementation of the application's view controller, responsible for coordinating
- the user interface, video feed, and PoseNet model.
-*/
-
 import AVFoundation
 import UIKit
 import VideoToolbox
 
 class ViewController: UIViewController {
-    /// The view the controller uses to visualize the detected poses.
+    // View the controller uses to visualize the detected poses
     @IBOutlet private var previewImageView: PoseImageView!
 
     private let videoCapture = VideoCapture()
 
     private var poseNet: PoseNet!
 
-    /// The frame the PoseNet model is currently making pose predictions from.
+    // Frame the PoseNet model is currently making pose predictions from
     private var currentFrame: CGImage?
 
-    /// The algorithm the controller uses to extract poses from the current frame.
+    // Algorithm the controller uses to extract poses from the current frame
     private var algorithm: Algorithm = .multiple
 
-    /// The set of parameters passed to the pose builder when detecting poses.
+    // Set of parameters passed to the pose builder when detecting poses
     private var poseBuilderConfiguration = PoseBuilderConfiguration()
 
     private var popOverPresentationManager: PopOverPresentationManager?
@@ -32,7 +24,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // For convenience, the idle timer is disabled to prevent the screen from locking.
+        // Idle timer is disabled to prevent the screen from locking.
         UIApplication.shared.isIdleTimerDisabled = true
 
         do {
@@ -66,7 +58,7 @@ class ViewController: UIViewController {
 
     override func viewWillTransition(to size: CGSize,
                                      with coordinator: UIViewControllerTransitionCoordinator) {
-        // Reinitilize the camera to update its output stream with the new orientation.
+        // To reinitilize the camera to update its output stream with the new orientation
         setupAndBeginCapturingVideoFrames()
     }
 

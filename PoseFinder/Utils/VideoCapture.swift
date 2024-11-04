@@ -1,11 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The implementation of a utility class that facilitates frame captures from the device
- camera.
-*/
-
 import AVFoundation
 import CoreVideo
 import UIKit
@@ -15,7 +7,6 @@ protocol VideoCaptureDelegate: AnyObject {
     func videoCapture(_ videoCapture: VideoCapture, didCaptureFrame image: CGImage?)
 }
 
-/// - Tag: VideoCapture
 class VideoCapture: NSObject {
     enum VideoCaptureError: Error {
         case captureSessionIsMissing
@@ -24,36 +15,35 @@ class VideoCapture: NSObject {
         case unknown
     }
 
-    /// The delegate to receive the captured frames.
+    // Delegate to receive the captured frames
     weak var delegate: VideoCaptureDelegate?
 
-    /// A capture session used to coordinate the flow of data from input devices to capture outputs.
+    // Capture session used to coordinate the flow of data from input devices to capture outputs
     let captureSession = AVCaptureSession()
 
-    /// A capture output that records video and provides access to video frames. Captured frames are passed to the
-    /// delegate via the `captureOutput()` method.
+    // Capture output that records video and provides access to video frames
     let videoOutput = AVCaptureVideoDataOutput()
 
-    /// The current camera's position.
+    // Current camera's position
     private(set) var cameraPostion = AVCaptureDevice.Position.back
 
-    /// The dispatch queue responsible for processing camera set up and frame capture.
+    // Dispatch queue responsible for processing camera set up and frame capture
     private let sessionQueue = DispatchQueue(
         label: "com.example.apple-samplecode.estimating-human-pose-with-posenet.sessionqueue")
 
-    /// Toggles between the front and back camera.
+    // Toggles between the front and back camera.
     public func flipCamera(completion: @escaping (Error?) -> Void) {
         sessionQueue.async {
             do {
                 self.cameraPostion = self.cameraPostion == .back ? .front : .back
 
-                // Indicate the start of a set of configuration changes to the capture session.
+                // To indicate the start of a set of configuration changes to the capture session
                 self.captureSession.beginConfiguration()
 
                 try self.setCaptureSessionInput()
                 try self.setCaptureSessionOutput()
 
-                // Commit configuration changes.
+                // To commit configuration changes
                 self.captureSession.commitConfiguration()
 
                 DispatchQueue.main.async {
@@ -67,10 +57,7 @@ class VideoCapture: NSObject {
         }
     }
 
-    /// Asynchronously sets up the capture session.
-    ///
-    /// - parameters:
-    ///     - completion: Handler called once the camera is set up (or fails).
+    // Sets up the capture session
     public func setUpAVCapture(completion: @escaping (Error?) -> Void) {
         sessionQueue.async {
             do {
@@ -104,7 +91,6 @@ class VideoCapture: NSObject {
 
     private func setCaptureSessionInput() throws {
         // Use the default capture device to obtain access to the physical device
-        // and associated properties.
         guard let captureDevice = AVCaptureDevice.default(
             .builtInWideAngleCamera,
             for: AVMediaType.video,
@@ -112,13 +98,12 @@ class VideoCapture: NSObject {
                 throw VideoCaptureError.invalidInput
         }
 
-        // Remove any existing inputs.
+        // To remove any existing inputs
         captureSession.inputs.forEach { input in
             captureSession.removeInput(input)
         }
 
-        // Create an instance of AVCaptureDeviceInput to capture the data from
-        // the capture device.
+        // Create an instance of AVCaptureDeviceInput to capture the data from capture device
         guard let videoInput = try? AVCaptureDeviceInput(device: captureDevice) else {
             throw VideoCaptureError.invalidInput
         }
@@ -131,20 +116,19 @@ class VideoCapture: NSObject {
     }
 
     private func setCaptureSessionOutput() throws {
-        // Remove any previous outputs.
+        // Tp remove any previous outputs
         captureSession.outputs.forEach { output in
             captureSession.removeOutput(output)
         }
 
-        // Set the pixel type.
+        // To set the pixel type
         let settings: [String: Any] = [
             String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
         ]
 
         videoOutput.videoSettings = settings
 
-        // Discard newer frames that arrive while the dispatch queue is already busy with
-        // an older frame.
+        // To discard newer frames that arrive while the dispatch queue is already busy with an older frame
         videoOutput.alwaysDiscardsLateVideoFrames = true
 
         videoOutput.setSampleBufferDelegate(self, queue: sessionQueue)
@@ -155,15 +139,14 @@ class VideoCapture: NSObject {
 
         captureSession.addOutput(videoOutput)
 
-        // Update the video orientation
+        // To update the video orientation
         if let connection = videoOutput.connection(with: .video),
             connection.isVideoOrientationSupported {
             connection.videoOrientation =
                 AVCaptureVideoOrientation(deviceOrientation: UIDevice.current.orientation)
             connection.isVideoMirrored = cameraPostion == .front
 
-            // Inverse the landscape orientation to force the image in the upward
-            // orientation.
+            // Inverse the landscape orientation to force the image in the upward orientation.
             if connection.videoOrientation == .landscapeLeft {
                 connection.videoOrientation = .landscapeRight
             } else if connection.videoOrientation == .landscapeRight {
@@ -172,17 +155,10 @@ class VideoCapture: NSObject {
         }
     }
 
-    /// Begin capturing frames.
-    ///
-    /// - Note: This is performed off the main thread as starting a capture session can be time-consuming.
-    ///
-    /// - parameters:
-    ///     - completionHandler: Handler called once the session has started running.
+    // To begin capturing frames
     public func startCapturing(completion completionHandler: (() -> Void)? = nil) {
         sessionQueue.async {
             if !self.captureSession.isRunning {
-                // Invoke the startRunning method of the captureSession to start the
-                // flow of data from the inputs to the outputs.
                 self.captureSession.startRunning()
             }
 
@@ -194,12 +170,7 @@ class VideoCapture: NSObject {
         }
     }
 
-    /// End capturing frames
-    ///
-    /// - Note: This is performed off the main thread, as stopping a capture session can be time-consuming.
-    ///
-    /// - parameters:
-    ///     - completionHandler: Handler called once the session has stopping running.
+    // To end capturing frames
     public func stopCapturing(completion completionHandler: (() -> Void)? = nil) {
         sessionQueue.async {
             if self.captureSession.isRunning {
@@ -231,13 +202,13 @@ extension VideoCapture: AVCaptureVideoDataOutputSampleBufferDelegate {
                     return
             }
 
-            // Create Core Graphics image placeholder.
+            // To create Core Graphics image placeholder.
             var image: CGImage?
 
-            // Create a Core Graphics bitmap image from the pixel buffer.
+            // To create a Core Graphics bitmap image from the pixel buffer
             VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &image)
 
-            // Release the image buffer.
+            // To release the image buffer.
             CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
 
             DispatchQueue.main.sync {

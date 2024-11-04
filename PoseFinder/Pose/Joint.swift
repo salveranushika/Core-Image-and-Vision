@@ -1,10 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-Implementation details of a structure used to describe a joint.
-*/
-
 import CoreGraphics
 
 class Joint {
@@ -28,29 +21,24 @@ class Joint {
         case rightAnkle
     }
 
-    /// The total number of joints available.
+    // Total no. of joints available
     static var numberOfJoints: Int {
         return Name.allCases.count
     }
 
-    /// The name used to identify the joint.
+    // Name used to identify the joint
     let name: Name
 
-    /// The position of the joint relative to the image.
-    ///
-    /// The position is initially relative to the model's input image size and then mapped to the original image
-    /// size after constructing the associated pose.
+    // Position of the joint relative to the image
     var position: CGPoint
 
-    /// The joint's respective cell index into model's output grid.
+    // Joint's respective cell index into model's output grid
     var cell: PoseNetOutput.Cell
 
-    /// The confidence score associated with this joint.
-    ///
-    /// The joint confidence is obtained from the `heatmap` array output by the PoseNet model.
+    // Confidence score associated with this joint
     var confidence: Double
 
-    /// A boolean value that indicates if the joint satisfies the joint threshold defined in the configuration.
+    // Boolean value that indicates if the joint satisfies the joint threshold defined in the configuration
     var isValid: Bool
 
     init(name: Name,
